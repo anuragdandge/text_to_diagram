@@ -4,7 +4,7 @@ This Flutter application leverages the power of Google's Gemini Pro model to gen
 
 ## Demo Video
 
-![](ReadmeMedia/V1.mp4)
+![](ReadmeMedia/output.gif)
 
 | | | |
 |-|-|-|
