@@ -6,9 +6,12 @@ final class GenerateImageInitialState extends GenerateImageState {}
 
 final class GeneratingImageState extends GenerateImageState {}
 
-final class GeneratedImagesSuccessState extends GenerateImageState {}
+final class GeneratedImagesSuccessState extends GenerateImageState {
+  late final String imageUrl;
+  GeneratedImagesSuccessState({required this.imageUrl});
+}
 
 final class GenerateImageErrorState extends GenerateImageState {
-  late String errorMessage;
-  GenerateImageErrorState({required errorMessage});
+  late final String errorMessage;
+  GenerateImageErrorState({required this.errorMessage});
 }

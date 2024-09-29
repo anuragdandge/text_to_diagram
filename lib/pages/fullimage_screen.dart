@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
@@ -27,10 +28,12 @@ class _FullScreenImageState extends State<FullScreenImage> {
           // 3. Save the image to the file
           final file = File(filePath);
           await file.writeAsBytes(response.bodyBytes);
+          final params = SaveFileDialogParams(sourceFilePath: file.path);
+          final finalPath = await FlutterFileDialog.saveFile(params: params);
 
           // 4. Show a success message (optional)
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Image saved successfully!')),
+            SnackBar(content: Text('Image saved successfully to $finalPath')),
           );
         } else {
           // Handle case where Downloads directory is not available
@@ -71,6 +74,10 @@ class _FullScreenImageState extends State<FullScreenImage> {
           ),
           FloatingActionButton(
             onPressed: () => _saveImage(widget.imageUrl),
+            // onPressed: () async {
+            //   final dir = await getTemporaryDirectory();
+            //   debugPrint(dir.path);
+            // },
             child: Icon(Icons.save),
           ),
         ],
