@@ -89,37 +89,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  TextField(
-                    controller: _plantumlCodeController,
-                    maxLines: 5,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: "Your code will appear here </>",
-                    ),
-                    readOnly: true, // Make the field read-only
-                  ),
-                  const SizedBox(height: 10),
-                  if (_diagramImage != null)
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => FullScreenImage(
-                              imageUrl: _diagramImage!,
-                            ),
-                          ),
-                        );
-                      },
-                      child: _imageLoading
-                          ? const Center(
-                              child:
-                                  CircularProgressIndicator()) // Loading animation
-                          : InteractiveViewer(
-                              child: Image.network(_diagramImage!)),
-                    )
-                  else
-                    const Text("Diagram will appear here "),
                 ],
               ),
             ),
@@ -130,23 +99,26 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               builder: (context, state) {
                 if (state is GenerateImageInitialState) {
-                  debugPrint("InitialState");
-                  return const Center(child: Text("Initial State "));
+                  return Center(
+                      child: Image.asset('assets/generating_image.png'));
                 } else if (state is GeneratedImagesSuccessState) {
                   debugPrint(" Success ");
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => FullScreenImage(
-                            imageUrl: (state).imageUrl,
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FullScreenImage(
+                              imageUrl: (state).imageUrl,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                    child: InteractiveViewer(
-                        child: Image.network((state).imageUrl)),
+                        );
+                      },
+                      child: InteractiveViewer(
+                          child: Image.network((state).imageUrl)),
+                    ),
                   );
                 } else if (state is GeneratingImageState) {
                   debugPrint(" Generating ");
